@@ -1,0 +1,93 @@
+﻿@model QuizzApp.ViewModels.QuestionViewModel
+@{
+    ViewBag.Title = "Question";
+    int mode = (int)Session["SelectedMode"];
+}
+              <script type='text/javascript'>
+                        var mode = @mode;
+                        var answer = "@Model.Answer";
+                        var question = "@Model.Text"; 
+                        var isCorrect = "@Model.IsCorrect";
+
+                  function myFunction() {
+                      if (mode == 1) {
+                          var userAnswer = document.querySelector('input[name="Radio"]:checked').value;
+                          if (isCorrect == userAnswer) {
+                              alert("Correct! The right answer is " + answer +"!");
+                          }
+                          else {
+                              alert("Sorry! Wrong Answer! The correct one was " + answer);
+                          }
+                          $('#hide').hide();
+                          $('#showQuestion').html(question);
+                          if (isCorrect=="Yes") {
+                              $('#showAnswer').html(answer + "-" + "Right!");
+                          }
+                          else {
+                              $('#showAnswer').html(answer+"-"+ "Wrong!");
+                          }
+                          $('#next').show();
+                          $('#next').click(function () {
+                              location.reload()
+                          });
+                      }
+                      else if (mode == 2) {
+                          var userAnswer = document.querySelector('input[name="Radio"]:checked').value;
+                          if (answer == userAnswer) {
+                              alert("Correct! The right answer is " + answer+ "!");
+                          }
+                          else {
+                              alert("Sorry! Wrong Answer! The correct one was " + answer);
+                          }
+                          //document.getElementById('hide').hidden();
+                          $('#hide').hide();
+                          $('#showQuestion').html(question);
+                          $('#showAnswer').html(answer);
+                          $('#next').show();
+                          $('#next').click(function () {
+                              location.reload()
+                          });
+                      }
+                  }
+              </script>
+              <div class="container">
+                  <p id="showQuestion" style="color:cornflowerblue; font-size:30px; margin-top:3%"></p>
+                  <p id="showAnswer" style="color:cornflowerblue; font-size:30px; margin-top:3%"></p>
+                  <button type="button" class="btn-sm" id="next" style="display:none;background-color:aliceblue; font-size:20px">Next</button>
+                  <div id="hide">
+                      @if (Model != null)
+                      {
+                          <div style="border: 2px solid blue; width: 60%; border-radius: 5px; margin-top: 5%; margin-left: 15%; background-color: antiquewhite; padding: 2px;">
+                              <div style="padding: 1%;">
+                                  <h3 style="margin-top: 1%;margin-bottom:1%; margin-left:2%"> <span style="background-color:aliceblue">Question:</span> </h3>
+                                  <div style="display:inline;padding:2%;">@Model.Text</div>
+                              </div>
+                              <div style="margin-left: 4%;">
+                                  @if (mode == 1)
+                                  {
+                                      <div style="padding:2%">@Model.Answer ?</div>
+
+                                      foreach (var choice in Model.Choices)
+                                      {
+                                          <label class="radio-inline" style=" display:inline;padding:2%">
+                                              <input type="radio" name="Radio" value="@choice.ChoiceText" style="margin-left: -16px;"> @choice.ChoiceText
+                                          </label><br />
+                                      }
+                                  }
+                                  else if (mode == 2)
+                                  {
+
+                                      foreach (var choice in Model.Choices)
+                                      {
+                                          <label class="radio-inline">
+                                              <input type="radio" name="Radio" value="@choice.ChoiceText" style="margin-left: -16px;"> @choice.ChoiceText
+                                          </label><br />
+                                      }
+
+                                  }
+                              </div>
+                              <button type="button" class="btn-sm" onClick='myFunction()' id="check" style=" background-color:aliceblue;width:20%;margin-top:2%;margin-left:3%; margin-bottom:1%; font-size:20px"><span class="glyphicon glyphicon-check"></span> Check</button>
+                          </div>
+                      }
+                  </div>
+              </div>

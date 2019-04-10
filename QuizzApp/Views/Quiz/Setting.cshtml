@@ -1,0 +1,20 @@
+﻿@model QuizzApp.ViewModels.QuizModeViewModel
+@{
+    ViewBag.Title = "Setting";
+}
+
+<h1 style="text-align:center">Settings</h1>
+<div style="border: 2px solid blue; width: 40%; border-radius: 5px; margin-top: 5%; margin-left: 30%; background-color: antiquewhite; padding: 2px;">
+    <div style="padding: 1%;">
+        <h3 style="margin-top: 1%;margin-bottom:1%; margin-left:20%"> <span style="background-color:aliceblue">Choose your quiz mode:</span> </h3>
+    </div>
+    <div style="margin-left: 9%;">
+        @using (Html.BeginForm("Setting", "Quiz", FormMethod.Post))
+        {
+            @Html.DropDownListFor(model => model.Mode, Model.Modes, new { @class = "form-control", @style = "margin-left:50px;" })<br />
+            <button style="  background-color:aliceblue;margin-left:12%;margin-bottom:2%; margin-top:-2%" type="submit" id="Enter" class="btn-sm"><span class="glyphicon glyphicon-cloud-upload" style="font-size:20px">Start quiz </span></button>
+        }
+    </div>
+    
+</div>
+
